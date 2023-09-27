@@ -1,0 +1,10 @@
+apiVersion: v2
+name: k8s-minio
+description: MinIO is a High Performance Object Storage. It is API compatible with Amazon S3 cloud storage service.
+type: application
+version: 0.0.0-replaceme
+appVersion: "0.0.0-replaceme"
+dependencies:
+  - name: minio
+    version: 12.8.9
+    repository: https://charts.bitnami.com/bitnami
