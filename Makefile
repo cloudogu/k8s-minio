@@ -1,6 +1,6 @@
 ARTIFACT_ID=k8s-minio
 MAKEFILES_VERSION=8.4.0
-VERSION=2023.9.23-1
+VERSION=2023.9.23-2
 
 .DEFAULT_GOAL:=help
 
@@ -33,7 +33,7 @@ minio-release: ## Interactively starts the release workflow for minio
 
 .PHONY: ${K8S_HELM_RESSOURCES}/charts
 ${K8S_HELM_RESSOURCES}/charts: ${BINARY_HELM}
-	@cd ${K8S_HELM_RESSOURCES} && ${BINARY_HELM} dependency build
+	@cd ${K8S_HELM_RESSOURCES} && ${BINARY_HELM} repo add bitnami https://charts.bitnami.com/bitnami && ${BINARY_HELM} dependency build
 
 .PHONY: helm-minio-apply
 helm-minio-apply: ${BINARY_HELM} ${K8S_HELM_RESSOURCES}/charts helm-generate $(K8S_POST_GENERATE_TARGETS) ## Generates and installs the helm chart.
