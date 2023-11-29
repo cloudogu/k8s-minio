@@ -1,0 +1,14 @@
+lokiServiceAccountSecretName: "k8s-minio-service-account-loki"
+
+minio:
+  commonLabels:
+    app: ces
+    app.kubernetes.io/name: k8s-minio
+  auth:
+    existingSecret: "k8s-minio-root-user"
+  provisioning:
+    enabled: true
+    usersExistingSecrets: ["k8s-minio-service-account-provisioning"]
+    buckets:
+      - name: "loki-log-bucket"
+        versioning: false
