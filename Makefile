@@ -45,6 +45,16 @@ helm-minio-reinstall: helm-delete helm-minio-apply ## Uninstalls the current hel
 
 .PHONY: helm-minio-chart-import
 helm-minio-chart-import: ${BINARY_HELM} ${K8S_HELM_RESSOURCES}/charts k8s-generate helm-generate-chart helm-package-release ## Pushes the helm chart to the k3ces registry.
-	@echo "Import ${K8S_HELM_RELEASE_TGZ} into K8s cluster ${K3CES_REGISTRY_URL_PREFIX}..."
-	@${BINARY_HELM} push ${K8S_HELM_RELEASE_TGZ} oci://${K3CES_REGISTRY_URL_PREFIX}/k8s ${BINARY_HELM_ADDITIONAL_PUSH_ARGS}
+	@if [[ ${STAGE} == "development" ]]; then \
+		echo "Import ${K8S_HELM_DEV_RELEASE_TGZ} into K8s cluster ${K3CES_REGISTRY_URL_PREFIX}..."; \
+		${BINARY_HELM} push ${K8S_HELM_DEV_RELEASE_TGZ} oci://${K3CES_REGISTRY_URL_PREFIX}/${K8S_HELM_ARTIFACT_NAMESPACE} ${BINARY_HELM_ADDITIONAL_PUSH_ARGS}; \
+	else \
+        echo "Import ${K8S_HELM_RELEASE_TGZ} into K8s cluster ${K3CES_REGISTRY_URL_PREFIX}..." \
+		${BINARY_HELM} push ${K8S_HELM_RELEASE_TGZ} oci://${K3CES_REGISTRY_URL_PREFIX}/${K8S_HELM_ARTIFACT_NAMESPACE} ${BINARY_HELM_ADDITIONAL_PUSH_ARGS}; \
+    fi
+	@echo "Done."
+
+.PHONY: component-minio-apply
+component-minio-apply: ${BINARY_HELM} check-k8s-namespace-env-var ${K8S_HELM_RESSOURCES}/charts helm-minio-chart-import component-generate $(K8S_POST_GENERATE_TARGETS) ## Applies the component yaml resource to the actual defined context.
+	@kubectl apply -f "${K8S_RESOURCE_COMPONENT}" --namespace="${NAMESPACE}"
 	@echo "Done."
