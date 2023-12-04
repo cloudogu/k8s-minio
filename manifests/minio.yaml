@@ -1,6 +1,0 @@
-# This is a dummy file, required for the makefile's yaml file generation process for the dogu-controller.
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: minio-dummy
-data: {}
