@@ -37,7 +37,7 @@ update_versions_modify_files() {
   minioClientRegistry=$(yq '.clientImage.registry' < "${minioTempValues}")
   minioClientRepo=$(yq '.clientImage.repository' < "${minioTempValues}")
   minioClientTag=$(yq '.clientImage.tag' < "${minioTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.minio" "${minioClientRegistry}/${minioClientRepo}:${minioClientTag}"
+  setAttributeInComponentPatchTemplate ".values.images.client" "${minioClientRegistry}/${minioClientRepo}:${minioClientTag}"
 
   local minioOsShellRegistry
   local minioOsShellClientRepo
@@ -45,7 +45,7 @@ update_versions_modify_files() {
   minioOsShellRegistry=$(yq '.volumePermissions.image.registry' < "${minioTempValues}")
   minioOsShellClientRepo=$(yq '.volumePermissions.image.repository' < "${minioTempValues}")
   minioOsShellClientTag=$(yq '.volumePermissions.image.tag' < "${minioTempValues}")
-  setAttributeInComponentPatchTemplate ".values.images.minio" "${minioOsShellRegistry}/${minioOsShellClientRepo}:${minioOsShellClientTag}"
+  setAttributeInComponentPatchTemplate ".values.images.osShell" "${minioOsShellRegistry}/${minioOsShellClientRepo}:${minioOsShellClientTag}"
 
   rm -rf ${minioTempChart}
 }
