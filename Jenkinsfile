@@ -23,13 +23,13 @@ node('docker') {
                     make 'clean'
                 }
 
-                kubevalImage = "cytopia/kubeval:0.15"
-                stage("Lint k8s Resources") {
+                stage("Lint helm Resources") {
                     new Docker(this)
-                            .image(kubevalImage)
-                            .inside("-v ${WORKSPACE}/minio/manifests/:/data -t --entrypoint=")
+                            .image("golang:1.20")
+                            .mountJenkinsUser()
+                            .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
                                     {
-                                        sh "kubeval manifests/minio.yaml --ignore-missing-schemas"
+                                        make "helm-lint"
                                     }
                 }
 
@@ -66,29 +66,18 @@ void stageAutomaticRelease() {
             gitflow.finishRelease(changelogVersion, productionReleaseBranch)
         }
 
-        stage('Generate release resource') {
-            make 'generate-release-resource'
-        }
-
-        stage('Push to Registry') {
-            GString targetResourceYaml = "target/make/${registryNamespace}/${repositoryName}_${releaseVersion}.yaml"
-
-            DoguRegistry registry = new DoguRegistry(this)
-            registry.pushK8sYaml(targetResourceYaml, repositoryName, registryNamespace, "${releaseVersion}")
-        }
-
         stage('Push Helm chart to Harbor') {
             new Docker(this)
                     .image("golang:1.20")
                     .mountJenkinsUser()
                     .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
                             {
-                                make "k8s/helm/charts"
-                                make 'helm-package-release'
+                                make 'helm-update-dependencies'
+                                make 'helm-package'
 
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
                                     sh ".bin/helm registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'"
-                                    sh ".bin/helm push target/make/k8s/helm/${repositoryName}-${releaseVersion}.tgz oci://${registryUrl}/${registryNamespace}"
+                                    sh ".bin/helm push target/k8s/helm/${repositoryName}-${releaseVersion}.tgz oci://${registryUrl}/${registryNamespace}"
                                 }
                             }
         }
