@@ -1,0 +1,21 @@
+apiVersion: v1
+values:
+  images:
+    minio: docker.io/bitnami/minio:2023.9.23-debian-11-r0
+    client: docker.io/bitnami/minio-client:2023.9.20-debian-11-r2
+    osShell: docker.io/bitnami/os-shell:11-debian-11-r77
+patches:
+  values.yaml:
+    image:
+      registry: "{{ registryFrom .images.minio }}"
+      repository: "{{ repositoryFrom .images.minio }}"
+      tag: "{{ tagFrom .images.minio }}"
+    clientImage:
+      registry: "{{ registryFrom .images.client }}"
+      repository: "{{ repositoryFrom .images.client }}"
+      tag: "{{ tagFrom .images.client }}"
+    volumePermissions:
+      image:
+        registry: "{{ registryFrom .images.osShell }}"
+        repository: "{{ repositoryFrom .images.osShell }}"
+        tag: "{{ tagFrom .images.osShell }}"
