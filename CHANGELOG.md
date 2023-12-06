@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v2023.9.23-3] - 2023-12-06
 ### Added
 - [#4] Add default configuration and secrets for provisioning a user and bucket for k8s-loki 
 
