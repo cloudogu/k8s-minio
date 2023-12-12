@@ -6,16 +6,17 @@ values:
     osShell: docker.io/bitnami/os-shell:11-debian-11-r77
 patches:
   values.yaml:
-    image:
-      registry: "{{ registryFrom .images.minio }}"
-      repository: "{{ repositoryFrom .images.minio }}"
-      tag: "{{ tagFrom .images.minio }}"
-    clientImage:
-      registry: "{{ registryFrom .images.client }}"
-      repository: "{{ repositoryFrom .images.client }}"
-      tag: "{{ tagFrom .images.client }}"
-    volumePermissions:
+    minio:
       image:
-        registry: "{{ registryFrom .images.osShell }}"
-        repository: "{{ repositoryFrom .images.osShell }}"
-        tag: "{{ tagFrom .images.osShell }}"
+        registry: "{{ registryFrom .images.minio }}"
+        repository: "{{ repositoryFrom .images.minio }}"
+        tag: "{{ tagFrom .images.minio }}"
+      clientImage:
+        registry: "{{ registryFrom .images.client }}"
+        repository: "{{ repositoryFrom .images.client }}"
+        tag: "{{ tagFrom .images.client }}"
+      volumePermissions:
+        image:
+          registry: "{{ registryFrom .images.osShell }}"
+          repository: "{{ repositoryFrom .images.osShell }}"
+          tag: "{{ tagFrom .images.osShell }}"
