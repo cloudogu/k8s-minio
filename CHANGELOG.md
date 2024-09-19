@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2023.9.23-6] - 2024-09-19
+### Changed
+- [#8] Relicense to AGPL-3.0-only
+
 ## [v2023.9.23-5] - 2023-12-13
 ### Fixed
 - [#6] Add missing key in patch templates.
