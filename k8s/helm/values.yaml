@@ -3,7 +3,6 @@ global:
   imagePullSecrets:
     - "ces-container-registries"
 minio:
-  .global:
   commonLabels:
     app: ces
     app.kubernetes.io/name: k8s-minio
