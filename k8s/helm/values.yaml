@@ -1,5 +1,7 @@
 lokiServiceAccountSecretName: "k8s-minio-service-account-loki"
-
+global:
+  imagePullSecrets:
+    - "ces-container-registries"
 minio:
   commonLabels:
     app: ces
