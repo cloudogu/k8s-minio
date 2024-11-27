@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2024.11.7-1] - 2024-11-27
+### Changed
+- Update chart to 14.8.5 and therefore MinIO to 2024.11.7
+- [#12] Deactivate unused service account token mount
+
 ## [v2023.9.23-7] - 2024-10-28
 ### Changed
 - [#10] Use `ces-container-registries` secret for pulling container images as default.
