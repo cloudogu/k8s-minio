@@ -4,15 +4,15 @@ VERSION=2023.9.23-7
 
 .DEFAULT_GOAL:=help
 
-ADDITIONAL_CLEAN=clean_charts
-clean_charts:
-	rm -rf ${K8S_HELM_RESSOURCES}/charts
-
 include build/make/variables.mk
 include build/make/clean.mk
 include build/make/release.mk
 include build/make/self-update.mk
 include build/make/k8s-component.mk
+
+ADDITIONAL_CLEAN=clean_charts
+clean_charts:
+	rm -rf ${HELM_SOURCE_DIR}/charts
 
 .PHONY: minio-release
 minio-release: ## Interactively starts the release workflow for minio
