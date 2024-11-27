@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Update chart to 14.8.5 and therefore MinIO to 2024.11.7
+- [#12] Deactivate unused service account token mount
 
 ## [v2023.9.23-7] - 2024-10-28
 ### Changed

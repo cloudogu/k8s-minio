@@ -14,3 +14,8 @@ minio:
     buckets:
       - name: "loki-log-bucket"
         versioning: false
+# serviceAccount is only needed for the minio secret. We don't create the minio secret,
+# because we define our own auth secret in minio.auth.existingSecret. Thus, it can be deactivated.
+  serviceAccount:
+    create: false
+  automountServiceAccountToken: false
