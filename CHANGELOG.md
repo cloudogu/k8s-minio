@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2024.11.7-2] - 2024-12-10
+### Added
+- [#14] NetworkPolicy to block all ingress traffic
+  - Dependent Dogus and Components must bring their own NetworkPolicy to access MinIO
+### Removed
+- [#14] Official NetworkPolicies in the MinIO chart have been disabled as ours are more restrictive for ingress.
+
 ## [v2024.11.7-1] - 2024-11-27
 ### Changed
 - Update chart to 14.8.5 and therefore MinIO to 2024.11.7
