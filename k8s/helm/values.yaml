@@ -1,8 +1,12 @@
 lokiServiceAccountSecretName: "k8s-minio-service-account-loki"
 global:
+  networkPolicies:
+    enabled: true
   imagePullSecrets:
     - "ces-container-registries"
 minio:
+  networkPolicy:
+    enabled: false
   commonLabels:
     app: ces
     app.kubernetes.io/name: k8s-minio
@@ -10,6 +14,8 @@ minio:
     existingSecret: "k8s-minio-root-user"
   provisioning:
     enabled: true
+    networkPolicy:
+      enabled: false
     usersExistingSecrets: ["k8s-minio-service-account-provisioning"]
     buckets:
       - name: "loki-log-bucket"
