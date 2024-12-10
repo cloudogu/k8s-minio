@@ -1,5 +1,6 @@
 {{- if .Values.global.networkPolicies.enabled }}
 # This NetworkPolicy denies all ingress to MinIO pods.
+# Dependent Dogus and Components must bring their own NetworkPolicy to access MinIO.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
