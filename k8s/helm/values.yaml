@@ -7,6 +7,12 @@ global:
 minio:
   networkPolicy:
     enabled: false
+  resources:
+    limits:
+      memory: 249M
+    requests:
+      cpu: 100m
+      memory: 249M
   commonLabels:
     app: ces
     app.kubernetes.io/name: k8s-minio
@@ -14,6 +20,12 @@ minio:
     existingSecret: "k8s-minio-root-user"
   provisioning:
     enabled: true
+    resources:
+      limits:
+        memory: 249M
+      requests:
+        cpu: 100m
+        memory: 249M
     networkPolicy:
       enabled: false
     usersExistingSecrets: ["k8s-minio-service-account-provisioning"]
