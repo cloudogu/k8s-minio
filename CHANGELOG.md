@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - [#18] Update Minio to v17.0.2
+- Update Makefiles to v10.1.1
 
 ## [v2024.11.7-3] - 2025-04-24
 ### Changed
