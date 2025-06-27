@@ -1,3 +1,6 @@
+# This job has been created to allow the upgrade from <17 to >=17.
+# The deployment has modified immutable fields and without removing the deployment before upgrade,
+# the upgrade won't work.
 apiVersion: batch/v1
 kind: Job
 metadata:
