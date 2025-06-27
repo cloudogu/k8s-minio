@@ -5,7 +5,6 @@ global:
   imagePullSecrets:
     - "ces-container-registries"
 minio:
-  fullnameOverride: k8s-ces-minio
   networkPolicy:
     enabled: false
   resources:

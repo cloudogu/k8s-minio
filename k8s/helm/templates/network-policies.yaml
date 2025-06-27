@@ -38,7 +38,7 @@ spec:
         - podSelector:
             matchLabels:
               app: ces
-              job-name: k8s-ces-minio-provisioning
+              job-name: k8s-minio-provisioning
           namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: {{ include "common.names.namespace" . | quote }}
