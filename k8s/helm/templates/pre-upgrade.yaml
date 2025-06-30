@@ -4,7 +4,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: delete-old-k8s-minio
+  name: k8s-minio-pre-upgrade
   annotations:
     "helm.sh/hook": pre-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded
@@ -22,4 +22,8 @@ spec:
             - -c
             - |
               echo "Deleting existing deployment..."
-              kubectl delete deployment k8s-minio --namespace {{ .Release.Namespace }}
+              kubectl delete deployment k8s-minio --namespace {{ .Release.Namespace }} || true
+              kubectl scale statefulset k8s-loki-write --replicas=0 -n {{ .Release.Namespace }} || true
+              kubectl scale statefulset k8s-loki-backend --replicas=0 -n {{ .Release.Namespace }}
+              kubectl scale deployment k8s-loki-read --replicas=0 -n {{ .Release.Namespace }}
+              kubectl scale deployment k8s-loki-gateway --replicas=0 -n {{ .Release.Namespace }}

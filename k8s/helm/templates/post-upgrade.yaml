@@ -1,0 +1,27 @@
+# This job has been created to allow the upgrade from <17 to >=17.
+# The deployment has modified immutable fields and without removing the deployment before upgrade,
+# the upgrade won't work.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k8s-minio-post-upgrade
+  annotations:
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "0"
+spec:
+  template:
+    spec:
+      serviceAccountName: hook-sa
+      restartPolicy: Never
+      containers:
+        - name: deleter
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl scale statefulset k8s-loki-write --replicas=1 -n {{ .Release.Namespace }} || true
+              kubectl scale statefulset k8s-loki-backend --replicas=1 -n {{ .Release.Namespace }}
+              kubectl scale deployment k8s-loki-read --replicas=1 -n {{ .Release.Namespace }}
+              kubectl scale deployment k8s-loki-gateway --replicas=1 -n {{ .Release.Namespace }}

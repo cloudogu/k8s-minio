@@ -3,7 +3,7 @@ kind: ServiceAccount
 metadata:
   name: hook-sa
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install,pre-upgrade,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     "helm.sh/hook-weight": "-10"
 ---
@@ -12,20 +12,20 @@ kind: Role
 metadata:
   name: hook-deleter-role
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install,pre-upgrade,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     "helm.sh/hook-weight": "-10"
 rules:
   - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["delete", "get", "list"]
+    resources: ["deployments", "deployments/scale", "daemonsets", "daemonsets/scale", "statefulsets", "statefulsets/scale"]
+    verbs: ["delete", "get", "list", "patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: hook-deleter-binding
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install,pre-upgrade,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     "helm.sh/hook-weight": "-10"
 subjects:
