@@ -10,6 +10,8 @@ include build/make/release.mk
 include build/make/self-update.mk
 include build/make/k8s-component.mk
 
+BINARY_HELM_VERSION=v3.18.3
+
 ADDITIONAL_CLEAN=clean_charts
 clean_charts:
 	rm -rf ${HELM_SOURCE_DIR}/charts
