@@ -16,12 +16,12 @@ spec:
       restartPolicy: Never
       containers:
         - name: deleter
-          image: bitnami/kubectl:latest
+          image: "{{ .Values.upgradeContainer.kubectl.image.registry }}/{{ .Values.upgradeContainer.kubectl.image.repository }}:{{ .Values.upgradeContainer.kubectl.image.tag }}"
           command:
             - /bin/sh
             - -c
             - |
               kubectl scale statefulset k8s-loki-write --replicas=1 -n {{ .Release.Namespace }} || true
-              kubectl scale statefulset k8s-loki-backend --replicas=1 -n {{ .Release.Namespace }}
-              kubectl scale deployment k8s-loki-read --replicas=1 -n {{ .Release.Namespace }}
-              kubectl scale deployment k8s-loki-gateway --replicas=1 -n {{ .Release.Namespace }}
+              kubectl scale statefulset k8s-loki-backend --replicas=1 -n {{ .Release.Namespace }} || true
+              kubectl scale deployment k8s-loki-read --replicas=1 -n {{ .Release.Namespace }} || true
+              kubectl scale deployment k8s-loki-gateway --replicas=1 -n {{ .Release.Namespace }} || true

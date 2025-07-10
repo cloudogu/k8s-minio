@@ -4,6 +4,7 @@ set -o nounset
 set -o pipefail
 
 componentTemplateFile=k8s/helm/component-patch-tpl.yaml
+valuesFile=k8s/helm/values.yaml
 minioTempChart="/tmp/minio"
 minioTempValues="${minioTempChart}/values.yaml"
 
@@ -42,10 +43,26 @@ update_versions_modify_files() {
   local minioOsShellRegistry
   local minioOsShellClientRepo
   local minioOsShellClientTag
-  minioOsShellRegistry=$(yq '.volumePermissions.image.registry' < "${minioTempValues}")
-  minioOsShellClientRepo=$(yq '.volumePermissions.image.repository' < "${minioTempValues}")
-  minioOsShellClientTag=$(yq '.volumePermissions.image.tag' < "${minioTempValues}")
+  minioOsShellRegistry=$(yq '.defaultInitContainers.volumePermissions.image.registry' < "${minioTempValues}")
+  minioOsShellClientRepo=$(yq '.defaultInitContainers.volumePermissions.image.repository' < "${minioTempValues}")
+  minioOsShellClientTag=$(yq '.defaultInitContainers.volumePermissions.image.tag' < "${minioTempValues}")
   setAttributeInComponentPatchTemplate ".values.images.osShell" "${minioOsShellRegistry}/${minioOsShellClientRepo}:${minioOsShellClientTag}"
+
+  local minioConsoleRegistry
+  local minioConsoleClientRepo
+  local minioConsoleClientTag
+  minioConsoleRegistry=$(yq '.console.image.registry' < "${minioTempValues}")
+  minioConsoleClientRepo=$(yq '.console.image.repository' < "${minioTempValues}")
+  minioConsoleClientTag=$(yq '.console.image.tag' < "${minioTempValues}")
+  setAttributeInComponentPatchTemplate ".values.images.console" "${minioConsoleRegistry}/${minioConsoleClientRepo}:${minioConsoleClientTag}"
+
+  local kubectlRegistry
+  local kubectlClientRepo
+  local kubectlClientTag
+  kubectlRegistry=$(yq '.upgradeContainer.kubectl.image.registry' < "${valuesFile}")
+  kubectlClientRepo=$(yq '.upgradeContainer.kubectl.image.repository' < "${valuesFile}")
+  kubectlClientTag=$(yq '.upgradeContainer.kubectl.image.tag' < "${valuesFile}")
+  setAttributeInComponentPatchTemplate ".values.images.kubectl" "${kubectlRegistry}/${kubectlClientRepo}:${kubectlClientTag}"
 
   rm -rf ${minioTempChart}
 }

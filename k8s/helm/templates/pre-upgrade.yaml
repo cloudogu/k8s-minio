@@ -16,14 +16,14 @@ spec:
       restartPolicy: Never
       containers:
         - name: deleter
-          image: bitnami/kubectl:latest
+          image: "{{ .Values.upgradeContainer.kubectl.image.registry }}/{{ .Values.upgradeContainer.kubectl.image.repository }}:{{ .Values.upgradeContainer.kubectl.image.tag }}"
           command:
             - /bin/sh
             - -c
             - |
               echo "Deleting existing deployment..."
-              kubectl delete deployment k8s-minio --namespace {{ .Release.Namespace }} || true
               kubectl scale statefulset k8s-loki-write --replicas=0 -n {{ .Release.Namespace }} || true
-              kubectl scale statefulset k8s-loki-backend --replicas=0 -n {{ .Release.Namespace }}
-              kubectl scale deployment k8s-loki-read --replicas=0 -n {{ .Release.Namespace }}
-              kubectl scale deployment k8s-loki-gateway --replicas=0 -n {{ .Release.Namespace }}
+              kubectl scale statefulset k8s-loki-backend --replicas=0 -n {{ .Release.Namespace }} || true
+              kubectl scale deployment k8s-loki-read --replicas=0 -n {{ .Release.Namespace }} || true
+              kubectl scale deployment k8s-loki-gateway --replicas=0 -n {{ .Release.Namespace }} || true
+              kubectl delete deployment k8s-minio --namespace {{ .Release.Namespace }} || true
