@@ -12,7 +12,7 @@ changelog = new Changelog(this)
 repositoryName = "k8s-minio"
 productionReleaseBranch = "main"
 
-goVersion = "1.21"
+goVersion = "1.24.5"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 

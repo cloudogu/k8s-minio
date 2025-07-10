@@ -6,5 +6,5 @@ version: 0.0.0-replaceme
 appVersion: "0.0.0-replaceme"
 dependencies:
   - name: minio
-    version: 14.8.5
+    version: 17.0.8
     repository: https://charts.bitnami.com/bitnami

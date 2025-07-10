@@ -1,6 +1,6 @@
 ARTIFACT_ID=k8s-minio
-MAKEFILES_VERSION=9.9.1
-VERSION=2024.11.7-3
+MAKEFILES_VERSION=10.1.1
+VERSION=2025.6.13-1
 
 .DEFAULT_GOAL:=help
 
@@ -9,6 +9,8 @@ include build/make/clean.mk
 include build/make/release.mk
 include build/make/self-update.mk
 include build/make/k8s-component.mk
+
+BINARY_HELM_VERSION=v3.18.3
 
 ADDITIONAL_CLEAN=clean_charts
 clean_charts:
