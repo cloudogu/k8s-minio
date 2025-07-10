@@ -4,18 +4,26 @@ global:
     enabled: true
   imagePullSecrets:
     - "ces-container-registries"
+upgradeContainer:
+  kubectl:
+    image:
+      registry: "docker.io"
+      repository: "bitnami/kubectl"
+      tag: "1.33.1"
 minio:
   networkPolicy:
     enabled: false
   resources:
     limits:
-      memory: 249M
+      memory: 300M
     requests:
       cpu: 100m
-      memory: 249M
+      memory: 300M
   commonLabels:
     app: ces
     app.kubernetes.io/name: k8s-minio
+  console:
+    enabled: false
   auth:
     existingSecret: "k8s-minio-root-user"
   provisioning:
