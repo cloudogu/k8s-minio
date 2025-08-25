@@ -4,13 +4,23 @@ global:
     enabled: true
   imagePullSecrets:
     - "ces-container-registries"
+  security:
+    allowInsecureImages: true
 upgradeContainer:
   kubectl:
     image:
       registry: "docker.io"
-      repository: "bitnami/kubectl"
+      repository: "bitnamilegacy/kubectl"
       tag: "1.33.1"
 minio:
+  image:
+    registry: "docker.io"
+    repository: "bitnamilegacy/minio"
+    tag: "2025.6.13-debian-12-r0"
+  clientImage:
+    registry: "docker.io"
+    repository: "bitnamilegacy/minio-client"
+    tag: "2025.5.21-debian-12-r6"
   networkPolicy:
     enabled: false
   resources:
@@ -24,6 +34,10 @@ minio:
     app.kubernetes.io/name: k8s-minio
   console:
     enabled: false
+    image:
+      registry: "docker.io"
+      repository: "bitnamilegacy/minio-object-browser"
+      tag: "2.0.2-debian-12-r0"
   auth:
     existingSecret: "k8s-minio-root-user"
   provisioning:
@@ -40,6 +54,12 @@ minio:
     buckets:
       - name: "loki-log-bucket"
         versioning: false
+  defaultInitContainers:
+    volumePermissions:
+      image:
+        registry: "docker.io"
+        repository: "bitnamilegacy/os-shell"
+        tag: "12-debian-12-r47"
 # serviceAccount is only needed for the minio secret. We don't create the minio secret,
 # because we define our own auth secret in minio.auth.existingSecret. Thus, it can be deactivated.
   serviceAccount:
