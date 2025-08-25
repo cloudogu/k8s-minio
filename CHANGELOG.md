@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2025.6.13-2] - 2025-08-25
+### Changed
+- [#20] Use "bitnamilegacy"-images for MinIO 
+
 ## [v2025.6.13-1] - 2025-07-10
 ### Changed
 - [#18] Update chart to 17.0.8 and therefore MinIO to 2025.6.13
