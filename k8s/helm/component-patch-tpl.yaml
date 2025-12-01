@@ -5,7 +5,7 @@ values:
     client: docker.io/bitnamilegacy/minio-client:2025.5.21-debian-12-r6
     osShell: docker.io/bitnamilegacy/os-shell:12-debian-12-r47
     console: docker.io/bitnamilegacy/minio-object-browser:2.0.2-debian-12-r0
-    kubectl: docker.io/bitnamilegacy/kubectl:1.33.1
+    kubectl: docker.io/alpine/kubectl:1.34.1
 patches:
   values.yaml:
     upgradeContainer:
