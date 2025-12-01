@@ -27,33 +27,33 @@ update_versions_modify_files() {
   local minioRegistry
   local minioRepo
   local minioTag
-  minioRegistry=$(yq '.image.registry' < "${minioTempValues}")
-  minioRepo=$(yq '.image.repository' < "${minioTempValues}")
-  minioTag=$(yq '.image.tag' < "${minioTempValues}")
+  minioRegistry=$(yq '.minio.image.registry' < "${valuesFile}")
+  minioRepo=$(yq '.minio.image.repository' < "${valuesFile}")
+  minioTag=$(yq '.minio.image.tag' < "${valuesFile}")
   setAttributeInComponentPatchTemplate ".values.images.minio" "${minioRegistry}/${minioRepo}:${minioTag}"
 
   local minioClientRegistry
   local minioClientRepo
   local minioClientTag
-  minioClientRegistry=$(yq '.clientImage.registry' < "${minioTempValues}")
-  minioClientRepo=$(yq '.clientImage.repository' < "${minioTempValues}")
-  minioClientTag=$(yq '.clientImage.tag' < "${minioTempValues}")
+  minioClientRegistry=$(yq '.minio.clientImage.registry' < "${valuesFile}")
+  minioClientRepo=$(yq '.minio.clientImage.repository' < "${valuesFile}")
+  minioClientTag=$(yq '.minio.clientImage.tag' < "${valuesFile}")
   setAttributeInComponentPatchTemplate ".values.images.client" "${minioClientRegistry}/${minioClientRepo}:${minioClientTag}"
 
   local minioOsShellRegistry
   local minioOsShellClientRepo
   local minioOsShellClientTag
-  minioOsShellRegistry=$(yq '.defaultInitContainers.volumePermissions.image.registry' < "${minioTempValues}")
-  minioOsShellClientRepo=$(yq '.defaultInitContainers.volumePermissions.image.repository' < "${minioTempValues}")
-  minioOsShellClientTag=$(yq '.defaultInitContainers.volumePermissions.image.tag' < "${minioTempValues}")
+  minioOsShellRegistry=$(yq '.minio.defaultInitContainers.volumePermissions.image.registry' < "${valuesFile}")
+  minioOsShellClientRepo=$(yq '.minio.defaultInitContainers.volumePermissions.image.repository' < "${valuesFile}")
+  minioOsShellClientTag=$(yq '.minio.defaultInitContainers.volumePermissions.image.tag' < "${valuesFile}")
   setAttributeInComponentPatchTemplate ".values.images.osShell" "${minioOsShellRegistry}/${minioOsShellClientRepo}:${minioOsShellClientTag}"
 
   local minioConsoleRegistry
   local minioConsoleClientRepo
   local minioConsoleClientTag
-  minioConsoleRegistry=$(yq '.console.image.registry' < "${minioTempValues}")
-  minioConsoleClientRepo=$(yq '.console.image.repository' < "${minioTempValues}")
-  minioConsoleClientTag=$(yq '.console.image.tag' < "${minioTempValues}")
+  minioConsoleRegistry=$(yq '.minio.console.image.registry' < "${valuesFile}")
+  minioConsoleClientRepo=$(yq '.minio.console.image.repository' < "${valuesFile}")
+  minioConsoleClientTag=$(yq '.minio.console.image.tag' < "${valuesFile}")
   setAttributeInComponentPatchTemplate ".values.images.console" "${minioConsoleRegistry}/${minioConsoleClientRepo}:${minioConsoleClientTag}"
 
   local kubectlRegistry
